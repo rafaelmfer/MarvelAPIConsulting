@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Marvel Characters Consultation</string>
+    <string name="marvel_character">Marvel Character</string>
+    <string name="comics">Comics</string>
+    <string name="back">voltar</string>
+    <string name="title">titulo toolbar</string>
+    <string name="close">fechar</string>
+
+    <string name="error_message">Não foi possível carregar as informações. Por favor, tente novamente mais tarde.</string>
+    <string name="error_message_empty_search">Não foi possível achar o personagem Marvel. Por favor, digite o personagem da Marvel corretamente.</string>
+</resources>
