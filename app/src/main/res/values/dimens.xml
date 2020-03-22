@@ -27,4 +27,5 @@
 
 <!--    ELEVATION-->
     <dimen name="elevate_4">4dp</dimen>
+    <dimen name="font_24">24sp</dimen>
 </resources>

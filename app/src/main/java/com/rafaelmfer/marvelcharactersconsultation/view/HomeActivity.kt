@@ -15,6 +15,7 @@ import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Result
 import com.rafaelmfer.marvelcharactersconsultation.utils.changeVisibility
 import com.rafaelmfer.marvelcharactersconsultation.viewmodel.MarvelCharactersViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.card_character_profile.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -92,7 +93,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showLoading(visible: Boolean) {
-        clContent.changeVisibility(!visible)
+        containerCardCharacterProfile.changeVisibility(!visible)
+        tvComics.changeVisibility(!visible)
+        containerCarouselComics.changeVisibility(!visible)
         progressCircular.changeVisibility(visible)
     }
 
