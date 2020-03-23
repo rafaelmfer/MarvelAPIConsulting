@@ -26,7 +26,7 @@ class MarvelCharactersViewModel(
     fun fetchCharactersList(charactersName: String) {
         characterName = charactersName
         command.value = Command.ShowLoading
-        marvelRepository.fetchCharactersList(this)
+        marvelRepository.fetchCharactersList(this, charactersName.substring(0, charactersName.length))
     }
 
     fun fetchComicsList(charactersId: Int) {
@@ -38,9 +38,12 @@ class MarvelCharactersViewModel(
         command.value = Command.HideLoading
 
         response.data.results.forEach { result ->
-            if (result.name.contentEquals(characterName)) {
+            if (result.name.equals(characterName, true)) {
                 marvelCharacterResponse.value = result
-                return@forEach
+                return
+            }
+            if (response.data.results.last() == result) {
+                marvelCharacterResponse.value = null
             }
         }
     }

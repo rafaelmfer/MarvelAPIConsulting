@@ -22,42 +22,45 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_4"
                 android:padding="@dimen/padding_4"
-                android:textStyle="bold"
+                android:textSize="@dimen/font_24"
+                android:fontFamily="@font/marvel_regular"
                 android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/title" />
+                tools:text="CHARACTERS NAME" />
 
             <ImageView
                 android:id="@+id/ivCharacterImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginStart="@dimen/margin_32"
-                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginEnd="@dimen/margin_32"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvCharacterName"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                app:srcCompat="@drawable/ic_book_marvel" />
 
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_8"
-                android:layout_marginTop="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_8"
-                android:layout_marginBottom="16dp"
-                android:text="@string/app_name"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_8"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_4"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorSecondary"
+                android:justificationMode="inter_word"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivCharacterImage" />
+                app:layout_constraintTop_toBottomOf="@id/ivCharacterImage"
+                tools:text="@string/app_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

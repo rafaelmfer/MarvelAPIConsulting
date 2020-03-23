@@ -13,62 +13,96 @@ import com.rafaelmfer.marvelcharactersconsultation.R
 import com.rafaelmfer.marvelcharactersconsultation.ViewModelFactory
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Result
 import com.rafaelmfer.marvelcharactersconsultation.utils.changeVisibility
+import com.rafaelmfer.marvelcharactersconsultation.utils.hideKeyboard
+import com.rafaelmfer.marvelcharactersconsultation.utils.setStatusBarColor
 import com.rafaelmfer.marvelcharactersconsultation.viewmodel.MarvelCharactersViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.card_character_profile.*
+import java.util.Locale
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var homeAdapter: HomeAdapter
     private val marvelCharactersViewModel by lazy {
         ViewModelProviders
             .of(this, ViewModelFactory())
             .get(MarvelCharactersViewModel::class.java)
     }
+
+    private lateinit var homeAdapter: HomeAdapter
     private var inputText: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setStatusBarColor(R.color.colorPrimary)
+
 
         setObservers()
+        setToolbarEndIconClick()
+        setListenerKeyboardSearchClick()
+    }
 
-        tilSearchToolbar.setEndIconOnClickListener {
-            // Respond to end icon presses
-            // Get input text
-            inputText = tilSearchToolbar.editText?.text.toString()
-            if (inputText != "") {
-                marvelCharactersViewModel.fetchCharactersList(inputText)
-            } else {
-                Toast.makeText(this, R.string.error_message_empty_search, Toast.LENGTH_LONG).show()
-            }
-        }
+    private fun setListenerKeyboardSearchClick() {
         tieSearchToolbar.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     inputText = tilSearchToolbar.editText?.text.toString()
                     marvelCharactersViewModel.fetchCharactersList(inputText)
+                    hideKeyboard()
                 }
             }
             false
         }
     }
 
+    private fun setToolbarEndIconClick() {
+        tilSearchToolbar.setEndIconOnClickListener {
+            // Respond to end icon presses
+            tvErrorMessage.changeVisibility(false)
+            // Get input text
+            inputText = tilSearchToolbar.editText?.text.toString()
+            if (inputText != "") {
+                marvelCharactersViewModel.fetchCharactersList(inputText)
+            } else {
+                tvErrorMessage.changeVisibility(true)
+                clContent.changeVisibility(false)
+                progressCircular.changeVisibility(false)
+            }
+            hideKeyboard()
+        }
+    }
+
     private fun setObservers() {
+        observerLoading()
+        observerCharacter()
+        observerComics()
+        observerError()
+    }
+
+    private fun observerLoading() {
         marvelCharactersViewModel.command.observe(this, Observer {
             when (it) {
                 is MarvelCharactersViewModel.Command.ShowLoading -> showLoading(true)
                 is MarvelCharactersViewModel.Command.HideLoading -> showLoading(false)
             }
         })
+    }
 
+    private fun observerCharacter() {
         marvelCharactersViewModel.marvelCharacterResponse.observe(this, Observer { response ->
-            homeAdapter = HomeAdapter()
-            findViewById<CardSliderViewPager>(R.id.viewPager).adapter = homeAdapter
-            initViews(response)
-            marvelCharactersViewModel.fetchComicsList(response.id)
+            if (response != null) {
+                homeAdapter = HomeAdapter()
+                findViewById<CardSliderViewPager>(R.id.viewPager).adapter = homeAdapter
+                initViews(response)
+                marvelCharactersViewModel.fetchComicsList(response.id)
+            } else if (response == null) {
+                tvErrorMessage.changeVisibility(true)
+                clContent.changeVisibility(false)
+            }
         })
+    }
 
+    private fun observerComics() {
         marvelCharactersViewModel.marvelComicsListResponse.observe(this, Observer { response ->
             response?.let { comicsData ->
                 homeAdapter.run {
@@ -77,15 +111,17 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         })
+    }
 
+    private fun observerError() {
         marvelCharactersViewModel.errorLiveData.observe(this, Observer {
             Toast.makeText(this, R.string.error_message, Toast.LENGTH_LONG).show()
         })
     }
 
     private fun initViews(character: Result) {
-        tvCharacterName.text = character.name
-        tvDescription.text = character.description
+        tvCharacterName.text = character.name.toUpperCase(Locale.US)
+        tvDescription.text = if (character.description.isNotEmpty()) character.description else getString(R.string.no_description)
         Glide.with(this)
             .load(character.thumbnail.path + "." + character.thumbnail.extension)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
@@ -93,10 +129,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showLoading(visible: Boolean) {
-        containerCardCharacterProfile.changeVisibility(!visible)
-        tvComics.changeVisibility(!visible)
-        containerCarouselComics.changeVisibility(!visible)
+        clContent.changeVisibility(!visible)
         progressCircular.changeVisibility(visible)
     }
-
 }

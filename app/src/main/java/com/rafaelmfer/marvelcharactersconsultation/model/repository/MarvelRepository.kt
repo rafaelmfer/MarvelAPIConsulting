@@ -15,9 +15,9 @@ class MarvelRepository {
     private val ts = System.currentTimeMillis().toString()
     private val hash = getMd5(ts)
 
-    fun fetchCharactersList(listener: MarvelServiceListener) {
+    fun fetchCharactersList(listener: MarvelServiceListener, characterName: String) {
 
-        serviceApi.fetchCharactersList(ts, hash, PUBLIC_KEY).enqueue(object : Callback<MarvelApiResponse>{
+        serviceApi.fetchCharactersList(characterName, ts, hash, PUBLIC_KEY).enqueue(object : Callback<MarvelApiResponse> {
 
             override fun onResponse(call: Call<MarvelApiResponse>, response: Response<MarvelApiResponse>) {
                 response.body()?.let {
@@ -33,7 +33,7 @@ class MarvelRepository {
 
     fun fetchComicsList(listener: MarvelServiceListener, characterId: Int) {
 
-        serviceApi.getComicsList(characterId, ts, hash, PUBLIC_KEY).enqueue(object : Callback<MarvelApiResponse>{
+        serviceApi.getComicsList(characterId, ts, hash, PUBLIC_KEY).enqueue(object : Callback<MarvelApiResponse> {
 
             override fun onResponse(call: Call<MarvelApiResponse>, response: Response<MarvelApiResponse>) {
                 response.body()?.let {
@@ -51,9 +51,11 @@ class MarvelRepository {
         try {
             val md = MessageDigest.getInstance("MD5")
 
-            val messageDigest = md.digest(ts.toByteArray()
-                    + PRIVATE_KEY.toByteArray()
-                    + PUBLIC_KEY.toByteArray())
+            val messageDigest = md.digest(
+                ts.toByteArray()
+                        + PRIVATE_KEY.toByteArray()
+                        + PUBLIC_KEY.toByteArray()
+            )
 
             val no = BigInteger(1, messageDigest)
 
