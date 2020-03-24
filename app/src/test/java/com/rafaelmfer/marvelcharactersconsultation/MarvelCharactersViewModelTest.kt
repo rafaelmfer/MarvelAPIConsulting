@@ -25,7 +25,7 @@ class MarvelCharactersViewModelTest {
     @MockK
     lateinit var repository: MarvelRepository
 
-    lateinit var viewModel: MarvelCharactersViewModel
+    private lateinit var viewModel: MarvelCharactersViewModel
 
     @Before
     fun setUp() {
@@ -59,11 +59,12 @@ class MarvelCharactersViewModelTest {
 
         viewModel.fetchComicsList(1)
 
+        assertEquals(MarvelCharactersViewModel.Command.HideLoading, viewModel.command.value)
         assertEquals(comicsList, viewModel.marvelComicsListResponse.value)
     }
 
     @Test
-    fun getRepositoriesList_errorResponse() {
+    fun fetchCharactersList_errorResponse() {
         val error = Exception()
 
         every { repository.fetchCharactersList(viewModel, any()) } answers { viewModel.onError(error) }
@@ -75,7 +76,7 @@ class MarvelCharactersViewModelTest {
     }
 
     @Test
-    fun getPullRequestsList_errorResponse() {
+    fun fetchComicsList_errorResponse() {
         val error = Exception()
 
         every { repository.fetchComicsList(viewModel, any()) } answers { viewModel.onError(error) }

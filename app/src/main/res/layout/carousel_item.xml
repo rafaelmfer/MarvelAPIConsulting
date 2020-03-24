@@ -47,7 +47,7 @@
             <ImageView
                 android:id="@+id/ivComicCarousel"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/height_150"
                 android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_16"

@@ -8,17 +8,18 @@ import java.util.concurrent.TimeUnit
 
 private const val BASE_URL = "https://gateway.marvel.com/v1/public/"
 
-
 object RetrofitService {
+
+    private const val TIMEOUT_30 = 30
 
     private val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
     private val httpClient = OkHttpClient.Builder()
-        .readTimeout(30, TimeUnit.SECONDS)
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(TIMEOUT_30.toLong(), TimeUnit.SECONDS)
+        .connectTimeout(TIMEOUT_30.toLong(), TimeUnit.SECONDS)
+        .writeTimeout(TIMEOUT_30.toLong(), TimeUnit.SECONDS)
         .addInterceptor(httpLoggingInterceptor)
         .build()
 

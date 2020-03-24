@@ -1,14 +1,13 @@
 package com.rafaelmfer.marvelcharactersconsultation.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.github.islamkhsh.CardSliderViewPager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rafaelmfer.marvelcharactersconsultation.R
 import com.rafaelmfer.marvelcharactersconsultation.ViewModelFactory
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Result
@@ -16,9 +15,7 @@ import com.rafaelmfer.marvelcharactersconsultation.utils.changeVisibility
 import com.rafaelmfer.marvelcharactersconsultation.utils.hideKeyboard
 import com.rafaelmfer.marvelcharactersconsultation.utils.setStatusBarColor
 import com.rafaelmfer.marvelcharactersconsultation.viewmodel.MarvelCharactersViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.card_character_profile.*
-import java.util.Locale
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -33,13 +30,32 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
         setStatusBarColor(R.color.colorPrimary, false)
 
-
+        setList()
         setObservers()
         setToolbarEndIconClick()
         setListenerKeyboardSearchClick()
+    }
+
+    private val listener = object : OnClickListenerMarvelCharacter {
+        override fun onClickCharacterId(characterResult: Result) {
+            startActivity(Intent(this@HomeActivity, CharactersDetailsActivity::class.java).apply {
+                putExtra("characterId", characterResult.id)
+                putExtra("characterName", characterResult.name)
+                putExtra("characterDescription", characterResult.description)
+                putExtra("characterThumbnail", characterResult.thumbnail)
+            })
+        }
+    }
+
+    private fun setList() {
+        rvCharactersNameList.apply {
+            layoutManager = LinearLayoutManager(this@HomeActivity)
+            homeAdapter = HomeAdapter(listener)
+            adapter = homeAdapter
+        }
     }
 
     private fun setListenerKeyboardSearchClick() {
@@ -57,16 +73,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setToolbarEndIconClick() {
         tilSearchToolbar.setEndIconOnClickListener {
-            // Respond to end icon presses
             tvErrorMessage.changeVisibility(false)
-            // Get input text
             inputText = tilSearchToolbar.editText?.text.toString()
             if (inputText != "") {
                 marvelCharactersViewModel.fetchCharactersList(inputText)
             } else {
                 tvErrorMessage.changeVisibility(true)
-                clContent.changeVisibility(false)
-                progressCircular.changeVisibility(false)
+                rvCharactersNameList.changeVisibility(false)
             }
             hideKeyboard()
         }
@@ -75,7 +88,6 @@ class HomeActivity : AppCompatActivity() {
     private fun setObservers() {
         observerLoading()
         observerCharacter()
-        observerComics()
         observerError()
     }
 
@@ -91,24 +103,13 @@ class HomeActivity : AppCompatActivity() {
     private fun observerCharacter() {
         marvelCharactersViewModel.marvelCharacterResponse.observe(this, Observer { response ->
             if (response != null) {
-                homeAdapter = HomeAdapter()
-                findViewById<CardSliderViewPager>(R.id.viewPager).adapter = homeAdapter
-                initViews(response)
-                marvelCharactersViewModel.fetchComicsList(response.id)
-            } else if (response == null) {
-                tvErrorMessage.changeVisibility(true)
-                clContent.changeVisibility(false)
-            }
-        })
-    }
-
-    private fun observerComics() {
-        marvelCharactersViewModel.marvelComicsListResponse.observe(this, Observer { response ->
-            response?.let { comicsData ->
                 homeAdapter.run {
-                    addComics(comicsData.results)
+                    addCharactersList(response)
                     notifyDataSetChanged()
                 }
+            } else {
+                tvErrorMessage.changeVisibility(true)
+                rvCharactersNameList.changeVisibility(false)
             }
         })
     }
@@ -119,17 +120,8 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    private fun initViews(character: Result) {
-        tvCharacterName.text = character.name.toUpperCase(Locale.US)
-        tvDescription.text = if (character.description.isNotEmpty()) character.description else getString(R.string.no_description)
-        Glide.with(this)
-            .load(character.thumbnail.path + "." + character.thumbnail.extension)
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .into(ivCharacterImage)
-    }
-
     private fun showLoading(visible: Boolean) {
-        clContent.changeVisibility(!visible)
+        rvCharactersNameList.changeVisibility(!visible)
         progressCircular.changeVisibility(visible)
     }
 }

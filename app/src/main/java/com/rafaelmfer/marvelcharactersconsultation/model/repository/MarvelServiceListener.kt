@@ -6,7 +6,8 @@ import com.rafaelmfer.marvelcharactersconsultation.model.pojo.MarvelApiResponse
 interface MarvelServiceListener {
 
     fun onSuccess(response: MarvelApiResponse)
-    fun onError(error: Throwable)
 
     fun onSuccessComics(response: Data)
+
+    fun onError(error: Throwable)
 }

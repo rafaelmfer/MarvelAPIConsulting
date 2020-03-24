@@ -18,7 +18,7 @@ class MarvelCharactersViewModel(
     }
 
     val command = MutableLiveData<Command>()
-    val marvelCharacterResponse = MutableLiveData<Result>()
+    val marvelCharacterResponse = MutableLiveData<List<Result>>()
     val marvelComicsListResponse = MutableLiveData<Data>()
     val errorLiveData = MutableLiveData<Throwable>()
     private var characterName = ""
@@ -30,25 +30,18 @@ class MarvelCharactersViewModel(
     }
 
     fun fetchComicsList(charactersId: Int) {
+        command.value = Command.ShowLoading
         marvelRepository.fetchComicsList(this, charactersId)
     }
 
 
     override fun onSuccess(response: MarvelApiResponse) {
         command.value = Command.HideLoading
-
-        response.data.results.forEach { result ->
-            if (result.name.equals(characterName, true)) {
-                marvelCharacterResponse.value = result
-                return
-            }
-            if (response.data.results.last() == result) {
-                marvelCharacterResponse.value = null
-            }
-        }
+        marvelCharacterResponse.value = if (response.data.results.isNullOrEmpty()) null else response.data.results
     }
 
     override fun onSuccessComics(response: Data) {
+        command.value = Command.HideLoading
         marvelComicsListResponse.value = response
     }
 

@@ -7,13 +7,11 @@ import com.rafaelmfer.marvelcharactersconsultation.viewmodel.MarvelCharactersVie
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory : ViewModelProvider.NewInstanceFactory() {
-
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         with(modelClass) {
             when {
                 isAssignableFrom(MarvelCharactersViewModel::class.java) ->
                     MarvelCharactersViewModel(MarvelRepository())
-
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

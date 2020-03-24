@@ -18,11 +18,12 @@
 
             <TextView
                 android:id="@+id/tvCharacterName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_4"
+                android:gravity="center"
                 android:padding="@dimen/padding_4"
-                android:textSize="@dimen/font_24"
+                android:textSize="@dimen/font_32"
                 android:fontFamily="@font/marvel_regular"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textStyle="bold"
@@ -34,7 +35,7 @@
             <ImageView
                 android:id="@+id/ivCharacterImage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/height_200"
                 android:layout_marginStart="@dimen/margin_32"
                 android:layout_marginTop="@dimen/margin_8"
                 android:layout_marginEnd="@dimen/margin_32"

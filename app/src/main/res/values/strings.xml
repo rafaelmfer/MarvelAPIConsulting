@@ -3,12 +3,10 @@
     <string name="marvel_character">Marvel Character</string>
     <string name="comics">Comics</string>
     <string name="back">voltar</string>
-    <string name="title">titulo toolbar</string>
-    <string name="close">fechar</string>
 
     <string name="no_description">No description available</string>
 
     <string name="error_message">Não foi possível carregar as informações. Por favor, tente novamente mais tarde.</string>
     <string name="error_message_empty_search">Não foi possível achar o personagem Marvel.\nPor favor, digite o personagem da Marvel corretamente.</string>
-    <string name="character">Character</string>
+    <string name="character">MARVEL CHARACTER INFO</string>
 </resources>
