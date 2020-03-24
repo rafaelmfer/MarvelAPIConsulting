@@ -13,7 +13,6 @@ interface MarvelApi {
         @Query("nameStartsWith") charactersInitialLetter: String,
         @Query("ts") ts: String,
         @Query("hash") hash: String,
-//        @Query("offset") offset: Int,
         @Query("apikey") apiKey: String,
         @Query("limit") limit: Int = 100
     ): Call<MarvelApiResponse>
@@ -26,6 +25,4 @@ interface MarvelApi {
         @Query("apikey") apiKey: String,
         @Query("limit") limit: Int = 100
     ): Call<MarvelApiResponse>
-
-
 }

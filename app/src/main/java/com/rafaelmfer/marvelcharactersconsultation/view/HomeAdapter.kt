@@ -12,7 +12,7 @@ import com.github.islamkhsh.CardSliderAdapter
 import com.rafaelmfer.marvelcharactersconsultation.R
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Result
 
-class HomeAdapter() : CardSliderAdapter<HomeAdapter.MarvelViewHolder>() {
+class HomeAdapter : CardSliderAdapter<HomeAdapter.MarvelViewHolder>() {
 
     private var comicListData = listOf<Result>()
 
@@ -42,6 +42,5 @@ class HomeAdapter() : CardSliderAdapter<HomeAdapter.MarvelViewHolder>() {
     class MarvelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivComicCarousel: ImageView = itemView.findViewById(R.id.ivComicCarousel)
         val tvComicTitle: TextView = itemView.findViewById(R.id.tvComicTitle)
-
     }
 }

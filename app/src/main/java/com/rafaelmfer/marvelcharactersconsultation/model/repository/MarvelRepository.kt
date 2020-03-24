@@ -16,7 +16,6 @@ class MarvelRepository {
     private val hash = getMd5(ts)
 
     fun fetchCharactersList(listener: MarvelServiceListener, characterName: String) {
-
         serviceApi.fetchCharactersList(characterName, ts, hash, PUBLIC_KEY).enqueue(object : Callback<MarvelApiResponse> {
 
             override fun onResponse(call: Call<MarvelApiResponse>, response: Response<MarvelApiResponse>) {
@@ -32,7 +31,6 @@ class MarvelRepository {
     }
 
     fun fetchComicsList(listener: MarvelServiceListener, characterId: Int) {
-
         serviceApi.getComicsList(characterId, ts, hash, PUBLIC_KEY).enqueue(object : Callback<MarvelApiResponse> {
 
             override fun onResponse(call: Call<MarvelApiResponse>, response: Response<MarvelApiResponse>) {
@@ -49,7 +47,7 @@ class MarvelRepository {
 
     private fun getMd5(ts: String): String {
         try {
-            val md = MessageDigest.getInstance("MD5")
+            val md = MessageDigest.getInstance(MD5)
 
             val messageDigest = md.digest(
                 ts.toByteArray()
@@ -57,10 +55,10 @@ class MarvelRepository {
                         + PUBLIC_KEY.toByteArray()
             )
 
-            val no = BigInteger(1, messageDigest)
+            val no = BigInteger(SIGNUM_1, messageDigest)
 
-            var hashtext = no.toString(16)
-            while (hashtext.length < 32) {
+            var hashtext = no.toString(RADIX)
+            while (hashtext.length < HASH_TEXT_LENGTH) {
                 hashtext = "0$hashtext"
             }
             return hashtext
@@ -72,5 +70,10 @@ class MarvelRepository {
     companion object {
         private const val PUBLIC_KEY = "dd82cc3630e1624e9695dbd63c236c72"
         private const val PRIVATE_KEY = "3065762afd1a9acaeb446aa6195e5a92f2a58c69"
+
+        private const val MD5 = "MD5"
+        private const val SIGNUM_1 = 1
+        private const val RADIX = 16
+        private const val HASH_TEXT_LENGTH = 32
     }
 }

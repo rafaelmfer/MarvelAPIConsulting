@@ -18,7 +18,3 @@ fun View.setToolbarAccessibleBackButton() {
 fun View.changeVisibility(visible: Boolean) {
     this.visibility = if (visible) View.VISIBLE else View.GONE
 }
-
-fun View.changeToInvisible(invisible: Boolean) {
-    this.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
-}

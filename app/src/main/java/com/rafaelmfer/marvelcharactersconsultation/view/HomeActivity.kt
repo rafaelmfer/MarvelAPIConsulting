@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.github.islamkhsh.CardSliderViewPager
 import com.rafaelmfer.marvelcharactersconsultation.R
 import com.rafaelmfer.marvelcharactersconsultation.ViewModelFactory
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Result
@@ -16,8 +15,9 @@ import com.rafaelmfer.marvelcharactersconsultation.utils.changeVisibility
 import com.rafaelmfer.marvelcharactersconsultation.utils.hideKeyboard
 import com.rafaelmfer.marvelcharactersconsultation.utils.setStatusBarColor
 import com.rafaelmfer.marvelcharactersconsultation.viewmodel.MarvelCharactersViewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.card_character_profile.*
+import kotlinx.android.synthetic.main.carousel_card_view_pager.*
 import java.util.Locale
 
 class HomeActivity : AppCompatActivity() {
@@ -28,14 +28,14 @@ class HomeActivity : AppCompatActivity() {
             .get(MarvelCharactersViewModel::class.java)
     }
 
-    private lateinit var homeAdapter: HomeAdapter
+    private var homeAdapter = HomeAdapter()
     private var inputText: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
         setStatusBarColor(R.color.colorPrimary, false)
-
+        csViewPager.adapter = homeAdapter
 
         setObservers()
         setToolbarEndIconClick()
@@ -57,16 +57,13 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setToolbarEndIconClick() {
         tilSearchToolbar.setEndIconOnClickListener {
-            // Respond to end icon presses
             tvErrorMessage.changeVisibility(false)
-            // Get input text
             inputText = tilSearchToolbar.editText?.text.toString()
             if (inputText != "") {
                 marvelCharactersViewModel.fetchCharactersList(inputText)
             } else {
                 tvErrorMessage.changeVisibility(true)
                 clContent.changeVisibility(false)
-                progressCircular.changeVisibility(false)
             }
             hideKeyboard()
         }
@@ -91,11 +88,9 @@ class HomeActivity : AppCompatActivity() {
     private fun observerCharacter() {
         marvelCharactersViewModel.marvelCharacterResponse.observe(this, Observer { response ->
             if (response != null) {
-                homeAdapter = HomeAdapter()
-                findViewById<CardSliderViewPager>(R.id.viewPager).adapter = homeAdapter
                 initViews(response)
                 marvelCharactersViewModel.fetchComicsList(response.id)
-            } else if (response == null) {
+            } else {
                 tvErrorMessage.changeVisibility(true)
                 clContent.changeVisibility(false)
             }

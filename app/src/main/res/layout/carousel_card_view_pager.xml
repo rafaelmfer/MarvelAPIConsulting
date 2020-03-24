@@ -5,11 +5,11 @@
     android:layout_height="wrap_content">
 
     <com.github.islamkhsh.CardSliderViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/csViewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardSlider_otherPagesWidth="48dp"
-        app:cardSlider_pageMargin="12dp"
+        app:cardSlider_otherPagesWidth="@dimen/margin_48"
+        app:cardSlider_pageMargin="@dimen/margin_12"
         app:cardSlider_indicator="@id/indicator"
         app:cardSlider_smallAlphaFactor="0.7"
         app:cardSlider_smallScaleFactor="0.9"
@@ -27,5 +27,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewPager" />
+        app:layout_constraintTop_toBottomOf="@id/csViewPager" />
 </androidx.constraintlayout.widget.ConstraintLayout>

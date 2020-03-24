@@ -1,7 +1,10 @@
 package com.rafaelmfer.marvelcharactersconsultation.model.pojo
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class MarvelApiResponse(
     @SerializedName("code") val code: Int,
     @SerializedName("status") val status: String,
@@ -10,4 +13,4 @@ data class MarvelApiResponse(
     @SerializedName("attributionHTML") val attributionHTML: String,
     @SerializedName("etag") val etag: String,
     @SerializedName("data") val `data`: Data
-)
+) : Parcelable
