@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Data
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.MarvelApiResponse
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Result
-import com.rafaelmfer.marvelcharactersconsultation.model.repository.MarvelRepository
-import com.rafaelmfer.marvelcharactersconsultation.model.repository.MarvelServiceListener
+import com.rafaelmfer.marvelcharactersconsultation.repository.MarvelRepository
+import com.rafaelmfer.marvelcharactersconsultation.repository.MarvelServiceListener
 
 class MarvelCharactersViewModel(
     private var marvelRepository: MarvelRepository

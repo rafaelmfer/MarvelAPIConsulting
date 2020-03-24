@@ -3,7 +3,7 @@ package com.rafaelmfer.marvelcharactersconsultation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.Data
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.MarvelApiResponse
-import com.rafaelmfer.marvelcharactersconsultation.model.repository.MarvelRepository
+import com.rafaelmfer.marvelcharactersconsultation.repository.MarvelRepository
 import com.rafaelmfer.marvelcharactersconsultation.viewmodel.MarvelCharactersViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.every

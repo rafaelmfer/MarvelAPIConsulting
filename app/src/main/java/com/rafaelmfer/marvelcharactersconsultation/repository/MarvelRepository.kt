@@ -1,4 +1,4 @@
-package com.rafaelmfer.marvelcharactersconsultation.model.repository
+package com.rafaelmfer.marvelcharactersconsultation.repository
 
 import com.rafaelmfer.marvelcharactersconsultation.model.pojo.MarvelApiResponse
 import com.rafaelmfer.marvelcharactersconsultation.retrofit.RetrofitService

@@ -2,7 +2,7 @@ package com.rafaelmfer.marvelcharactersconsultation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.rafaelmfer.marvelcharactersconsultation.model.repository.MarvelRepository
+import com.rafaelmfer.marvelcharactersconsultation.repository.MarvelRepository
 import com.rafaelmfer.marvelcharactersconsultation.viewmodel.MarvelCharactersViewModel
 
 @Suppress("UNCHECKED_CAST")
