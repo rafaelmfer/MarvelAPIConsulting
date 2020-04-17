@@ -11,6 +11,6 @@ IMAGEM,
 QUADRINHOS QUE PARTICIPOU,
 
 
-![Alt text](https://raw.github.com/rafaelmfer/MarvelAPIConsulting/experiencia_com_lista/app/src/main/java/com/rafaelmfer/marvelcharactersconsultation/screenshots/Screenshot_1585033790.webp)
+![ScreenShot](https://raw.github.com/rafaelmfer/MarvelAPIConsulting/experiencia_com_lista/screenshots/Screenshot_1585033790.webp)
 
-![Alt text](https://raw.github.com/rafaelmfer/MarvelAPIConsulting/experiencia_com_lista/app/src/main/java/com/rafaelmfer/marvelcharactersconsultation/screenshots/Screenshot_1585033869.webp)
+![ScreenShot](https://raw.github.com/rafaelmfer/MarvelAPIConsulting/experiencia_com_lista/screenshots/Screenshot_1585033869.webp)
