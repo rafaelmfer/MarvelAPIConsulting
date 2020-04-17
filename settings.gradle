@@ -1,3 +1,2 @@
 rootProject.name='Marvel Characters Consultation'
 include ':app'
-include ':customviews'
